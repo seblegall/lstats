@@ -85,5 +85,6 @@ AVG Response Time       Total Calls in error
 
 ## TODO
 
+- [ ] Add unit tests
 - [ ] Add possibiity to set the number of concurrent workers
 - [ ] Add a random wait time between requests in order to simulate more realistic user calls
