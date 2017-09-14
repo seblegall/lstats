@@ -12,8 +12,6 @@ import (
 	"github.com/gosuri/uiprogress"
 )
 
-const workers = 25
-
 //FailureLog represents the response send by the tested url when status code is >= 300.
 type FailureLog struct {
 	statusCode int
@@ -32,7 +30,7 @@ type LoadStats struct {
 }
 
 //NewLoadStats init a new load test.
-func NewLoadStats(reqs []*http.Request) LoadStats {
+func NewLoadStats(reqs []*http.Request, workers int) LoadStats {
 	return LoadStats{
 		Reqs:    reqs,
 		workers: workers,
@@ -53,7 +51,7 @@ func (ls *LoadStats) Launch() {
 	in := make(chan *http.Request, 2*ls.workers)
 	mu := &sync.Mutex{}
 
-	for i := 0; i < workers; i++ {
+	for i := 0; i < ls.workers; i++ {
 		wg.Add(1)
 		go func(tests *LoadStats, bar *uiprogress.Bar) {
 			defer wg.Done()

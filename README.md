@@ -47,13 +47,16 @@ func main() {
 		}
 	}
 
-	test := lstats.NewLoadStats(reqs)
+	//25 is the total parallel workers desired.
+	//This way, lstat will do the calls on 25 differents go routine.
+	test := lstats.NewLoadStats(reqs, 25)
 	test.Launch()
 	test.Print()
 }
 ```
 
-*note* : The `NewLoadStats()` function is expecting a slice a `*http.Request`. This let you create custom request and add headers, auth, or anything you need to actualy to the request.
+*note* : The `NewLoadStats()` function is expecting a slice of `*http.Request`. This let you create custom request and add headers, auth, or anything you need to actualy to the request.
+The second parameters is the count of parrallel workers desired.
 
 Now, let's create an `urls.txt` file containing a list of url to test with one url by line : 
 
